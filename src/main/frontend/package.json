@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "1.0.0",
   "description": "frontend layer for git-compare",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server"

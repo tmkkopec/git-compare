@@ -1,0 +1,21 @@
+{
+  "name": "frontend",
+  "description": "frontend layer for git-compare",
+  "main": "app/index.js",
+  "authors": [
+    ""
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/tmkkopec/git-compare",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "../resources/static/css/bower_components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "material-design-lite": "^1.3.0"
+  }
+}
