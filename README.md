@@ -9,7 +9,7 @@
 
 * `git clone` repo
 
-###Frontend development
+### Frontend development
 
 * `cd $project_dir/src/main/fronted`
 * `npm install` to fetch dependencies for server side
@@ -18,7 +18,7 @@
 
 All output code is put under `src/main/resources/static`.
 
-###Backend development
+### Backend development
 
 * `cd $project_dir`
 * in order to start server 
