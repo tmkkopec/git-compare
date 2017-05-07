@@ -4,8 +4,8 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-    template: __dirname + '/../resources/static/index.html',
-    filename: 'index.html',
+    template: __dirname + '/../resources/templates/index.html',
+    filename: '../../index.html',
     inject: 'body'
 });
 
@@ -26,9 +26,18 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        path: __dirname + '/../resources/static/js/generated'
+        path: __dirname + '/../resources/static/js/generated/'
+    },
+    devServer: {
+        publicPath: "/js/generated/",
+        contentBase: "../resources/static/",
+        port: 9000,
+        proxy: {
+            "/login": "http://localhost:8080",
+            "/user": "http://localhost:8080"
+        }
     },
     plugins: [
-        UglifyJsPlugin
+        HTMLWebpackPluginConfig
     ]
 };
