@@ -1,8 +1,11 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+'use strict';
 
-const element = <h1>inside index.js</h1>;
+const React = require('react');
+const ReactDOM = require('react-dom');
+const LoginPage = require('./components/LoginPage');
+import LoginControl from "./components/LoginControl";
+
 ReactDOM.render(
-    element,
+    <LoginControl/>,
     document.getElementById('app')
 );
