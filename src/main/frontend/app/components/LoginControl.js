@@ -1,10 +1,10 @@
 'use strict';
 
-import React from 'react';
-import $ from 'jquery';
-import * as Cookies from 'js-cookie';
-import LoginPage from './LoginPage';
-import HomePage from './HomePage';
+import React from "react";
+import $ from "jquery";
+import * as Cookies from "js-cookie";
+import LoginPage from "./LoginPage";
+import HomePage from "./HomePage";
 
 class LoginControl extends React.Component {
     constructor(props) {

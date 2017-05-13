@@ -3,7 +3,7 @@
 const React = require('react');
 
 class MdlGrid extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 

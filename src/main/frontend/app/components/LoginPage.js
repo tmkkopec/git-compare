@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
     }
 
     _buildHref() {
-        location.href='/login';
+        location.href = '/login';
     }
 
     render() {

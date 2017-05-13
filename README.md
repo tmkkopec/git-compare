@@ -21,8 +21,10 @@ All output code is put under `src/main/resources/static`
 
 ### Backend development
 
-* `cd $project_dir`
-* in order to start server 
-    * just run in IDE [main class](https://github.com/tmkkopec/git-compare/blob/master/src/main/java/org/tai/GitCompareApplication.java) OR
-    * at the first terminal, start Gradle build as a continuous task: `gradle build --continuous` AND 
-    at the second terminal, start the Gradle bootRun task: `gradle bootRun` 
+In order to start server:
+* just run in IDE [main class](https://github.com/tmkkopec/git-compare/blob/master/src/main/java/org/tai/GitCompareApplication.java) OR
+* for hot reloading of java classes 
+    1. `cd $project_dir` 
+    2. at the first terminal, start Gradle build as a continuous task: `gradle build --continuous`
+    3. at the second terminal, start the Gradle bootRun task: `gradle bootRun`
+        

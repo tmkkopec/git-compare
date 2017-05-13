@@ -1,7 +1,7 @@
 'use strict';
 
 import React from "react";
-import Modal from "boron/FadeModal"
+import Modal from "boron/FadeModal";
 
 class AddDialog extends React.Component {
     constructor(props) {

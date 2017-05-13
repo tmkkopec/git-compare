@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React from "react";
 
 class Header extends React.Component {
     constructor(props) {
@@ -18,7 +18,8 @@ class Header extends React.Component {
                     {/*Navigation*/}
                     <span className="mdl-typography--body-2">Logged in as {this.props.username}</span>
                     <nav className="mdl-navigation">
-                        <a className="mdl-navigation__link mdl-typography--button" href="" onClick={this.props.onLogout}>Logout</a>
+                        <a className="mdl-navigation__link mdl-typography--button" href=""
+                           onClick={this.props.onLogout}>Logout</a>
                     </nav>
                 </div>
             </header>
