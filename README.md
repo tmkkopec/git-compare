@@ -11,7 +11,7 @@
 
 ### Frontend development
 
-* `cd $project_dir/src/main/fronted`
+* `cd $project_dir/src/main/frontend`
 * `npm install` to fetch dependencies for server side
 * `bower install` to fetch dependencies for client side
 * `npm run build` to build static javascript code
