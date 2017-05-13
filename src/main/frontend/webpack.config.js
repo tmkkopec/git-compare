@@ -34,7 +34,8 @@ module.exports = {
         port: 9000,
         proxy: {
             "/login": "http://localhost:8080",
-            "/user": "http://localhost:8080"
+            "/user": "http://localhost:8080",
+            "/logout": "http://localhost:8080"
         }
     },
     plugins: [

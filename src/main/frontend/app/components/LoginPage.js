@@ -28,7 +28,7 @@ class Link extends React.Component {
             <MdlCell cellWidth="12">
                 <p className="mdl-color-text--black">
                     Login with
-                    <button className="mdl-button mdl-js-button mdl-button--raised"
+                    <button className="loginButton mdl-button mdl-js-button mdl-button--raised"
                             onClick={this.props.onClickEvent}>GitHub
                     </button>
                 </p>

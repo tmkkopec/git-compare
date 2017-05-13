@@ -10,9 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "boron": "^0.2.3",
+    "dialog-polyfill": "^0.4.7",
     "jquery": "^3.2.1",
+    "js-cookie": "^2.1.4",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-modal": "^1.7.7"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
