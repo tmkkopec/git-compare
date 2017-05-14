@@ -11,6 +11,7 @@ class LoginControl extends React.Component {
         super(props);
         this.state = {
             username: 'N/A',
+            token: null,
             authenticated: false
         };
         this.handleLogout = this.handleLogout.bind(this);
@@ -45,8 +46,10 @@ class LoginControl extends React.Component {
             url: '/user',
             success: function (data) {
                 const username = data.userAuthentication.details.name;
+                const token = data.details.tokenValue;
                 self.setState({
                     username: username,
+                    token: token,
                     authenticated: true
                 });
             },
@@ -61,7 +64,10 @@ class LoginControl extends React.Component {
 
     render() {
         if (this.state.authenticated)
-            return <HomePage user={{name: this.state.username}} onLogout={this.handleLogout}/>;
+            return <HomePage
+                user={{name: this.state.username}}
+                onLogout={this.handleLogout}
+                token={this.state.token}/>;
         else
             return <LoginPage/>;
     }

@@ -11,3 +11,48 @@
     transform: translate(-50%, -50%);
     width: 40%;
 }
+
+#dynamicInput {
+    width: 100%;
+}
+
+.mdl-menu {
+    top: initial;
+    left: initial;
+    width: 100%;
+}
+
+.card {
+    background: #fff;
+    border-radius: 2px;
+    height: auto;
+    max-height: 200px;
+    position: relative;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.card-2 {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.card img {
+    height: 20px;
+    width: 20px;
+    padding-right: 5px;
+}
+
+.card .mdl-list li {
+    width: 100%;
+    float: left;
+}
+
+.card .mdl-list li:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+}
+
+.mdl-dialog__content .mdl-textfield__input {
+    border-bottom-color: #000000;
+    padding-left: 5px;
+}

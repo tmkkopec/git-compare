@@ -47,7 +47,7 @@ class Drawer extends React.Component {
     render() {
         return (
             <div className="mdl-layout__drawer">
-                <span className="mdl-layout-title">Filter</span>
+                <span className="mdl-layout-title">Filtering options</span>
                 <nav className="mdl-navigation">
                     <ul className="mdl-list">
                         {this.props.attrs.map((attr, index) =>

@@ -19,12 +19,12 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
                 <Header username={this.props.user.name} onLogout={this.props.onLogout}/>
                 <Drawer attrs={filteringAttributes}/>
                 <main className="mdl-layout__content">
                     <div className="page">
-                        <AddDialog/>
+                        <AddDialog token={this.props.token}/>
                     </div>
                 </main>
             </div>
