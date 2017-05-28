@@ -8,7 +8,7 @@ class MdlGrid extends React.Component {
     }
 
     render() {
-        return <div className="mdl-grid">{this.props.children}</div>;
+        return <div className={'mdl-grid ' + this.props.className}>{this.props.children}</div>;
     }
 }
 

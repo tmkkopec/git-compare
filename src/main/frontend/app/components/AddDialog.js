@@ -46,6 +46,7 @@ class AddDialog extends React.Component {
 
     handleHide() {
         this.setState({
+            inputValue: '',
             isListVisible: false,
             users: []
         });
@@ -91,14 +92,14 @@ class AddDialog extends React.Component {
         });
     }
 
-    addUser(user) {
+    addUser(username) {
         this.hideModal();
-        console.log(user)
+        this.props.addPanel(username);
     }
 
     render() {
         return (
-            <div>
+            <div className="addDialog">
                 <button
                     className="addButton mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
                     onClick={this.showModal}>

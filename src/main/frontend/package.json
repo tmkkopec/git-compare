@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "boron": "^0.2.3",
-    "dialog-polyfill": "^0.4.7",
     "jquery": "^3.2.1",
     "js-cookie": "^2.1.4",
     "react": "^15.4.2",

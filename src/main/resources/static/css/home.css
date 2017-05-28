@@ -1,3 +1,7 @@
+.addDialog {
+    position: relative;
+}
+
 .addButton {
     position: absolute;
     bottom: 10px;
@@ -55,4 +59,27 @@
 .mdl-dialog__content .mdl-textfield__input {
     border-bottom-color: #000000;
     padding-left: 5px;
+}
+
+.mdl-cell {
+    padding-top: 10px;
+    margin: 0 auto;
+}
+
+.mdl-cell table {
+    margin: 0 auto;
+    width: 90%;
+}
+
+td {
+    text-align: center;
+}
+
+td img {
+    height: 50px;
+    width: 50px;
+}
+
+table a {
+    color: rgb(85, 26, 139)
 }

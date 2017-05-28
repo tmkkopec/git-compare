@@ -31,7 +31,7 @@ module.exports = {
     devServer: {
         publicPath: "/js/generated/",
         contentBase: "../resources/static/",
-        port: 9000,
+        port: 9001,
         proxy: {
             "/login": "http://localhost:8080",
             "/user": "http://localhost:8080",

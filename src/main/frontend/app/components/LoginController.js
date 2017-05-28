@@ -6,7 +6,7 @@ import * as Cookies from "js-cookie";
 import LoginPage from "./LoginPage";
 import HomePage from "./HomePage";
 
-class LoginControl extends React.Component {
+class LoginController extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -73,4 +73,4 @@ class LoginControl extends React.Component {
     }
 }
 
-export default LoginControl;
+export default LoginController;

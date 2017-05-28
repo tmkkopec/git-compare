@@ -1,6 +1,7 @@
 'use strict';
 
 import React from "react";
+const uniqueId = require('lodash/uniqueId');
 
 class Attribute extends React.Component {
     constructor(props) {
@@ -51,8 +52,8 @@ class Drawer extends React.Component {
                 <nav className="mdl-navigation">
                     <ul className="mdl-list">
                         {this.props.attrs.map((attr, index) =>
-                            <li key={attr} className="mdl-list__item">
-                                <Attribute attributeName={attr}/>
+                            <li className="mdl-list__item" key={uniqueId()}>
+                                <Attribute attributeName={attr.value}/>
                                 <Checkbox defaultChecked={true} id={index}/>
                             </li>
                         )}

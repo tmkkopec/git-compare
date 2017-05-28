@@ -49,10 +49,10 @@ class LoginPage extends React.Component {
     render() {
         return (
             <div>
-                <MdlGrid>
+                <MdlGrid className="login-grid">
                     <Title/>
                 </MdlGrid>
-                <MdlGrid>
+                <MdlGrid className="login-grid">
                     <Link onClickEvent={this._buildHref}/>
                 </MdlGrid>
             </div>

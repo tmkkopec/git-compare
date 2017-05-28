@@ -3,9 +3,9 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const LoginPage = require('./components/LoginPage');
-import LoginControl from "./components/LoginControl";
+import LoginController from "./components/LoginController";
 
 ReactDOM.render(
-    <LoginControl/>,
+    <LoginController/>,
     document.getElementById('app')
 );

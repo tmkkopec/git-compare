@@ -13,9 +13,4 @@ public class Util {
     public Principal user(Principal principal) {
         return principal;
     }
-
-    @RequestMapping("/home")
-    public String home() {
-        return "home.html";
-    }
 }

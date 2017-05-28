@@ -9,7 +9,7 @@ class MdlCell extends React.Component {
 
     render() {
         return (
-            <div className={'mdl-cell mdl-cell--' + this.props.cellWidth + '-col'}>
+            <div className={'mdl-cell mdl-cell--' + this.props.cellWidth + '-col-desktop'}>
                 {this.props.children}
             </div>
         )
