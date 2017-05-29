@@ -21,7 +21,7 @@ public class JSONCalc {
             return firstPageLength;
         }
         String lastPageUrl = getLastPageUrl(linkHeader);
-        int pages = getLastPage(linkHeader, lastPageUrl);
+        int pages = getLastPage(lastPageUrl);
         return firstPageLength * (pages - 1) + readJsonArray(lastPageUrl).length();
     }
 
@@ -39,7 +39,7 @@ public class JSONCalc {
         throw new RuntimeException("Shouldn't be here");
     }
 
-    private static int getLastPage(String linkHeader, String lastPageUrl){
+    private static int getLastPage(String lastPageUrl){
         String[] lastPageUrlSplit = lastPageUrl.split("page=");
         return Integer.valueOf(lastPageUrlSplit[1]);
     }
