@@ -1,5 +1,6 @@
 package org.tai.jsonutils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,6 +9,21 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 public class JSONReader {
+
+
+    public static JSONObject readJson(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+        return new JSONObject(readInputStream(is));
+    }
+
+    private static String readInputStream(InputStream is) throws IOException {
+        try {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            return readUrl(rd);
+        } finally {
+            is.close();
+        }
+    }
 
     private static String readUrl(BufferedReader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -18,17 +34,12 @@ public class JSONReader {
         return sb.toString();
     }
 
-    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+    public static JSONArray readJsonArray(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readUrl(rd);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
-        } finally {
-            is.close();
-        }
+        return readJsonArray(is);
     }
 
-
+    public static JSONArray readJsonArray(InputStream is) throws IOException, JSONException {
+        return new JSONArray(readInputStream(is));
+    }
 }
