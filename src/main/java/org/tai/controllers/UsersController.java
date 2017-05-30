@@ -7,8 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.tai.jsonutils.JSONCalc.getArrayLength;
+import static org.tai.jsonutils.JSONCalc.getArrays;
 import static org.tai.jsonutils.JSONReader.readJson;
 import static org.tai.jsonutils.JSONReader.readJsonArray;
 
@@ -18,6 +21,7 @@ public class UsersController {
     @RequestMapping(path = "/users/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getUserInfo(@PathVariable String username) throws IOException {
         String mainUrl = String.format("https://api.github.com/users/%s", username);
+        String ownReposUrl = String.format("https://api.github.com/users/%s/repos?per_page=100", username);
         String reposContributedToUrl = String.format("https://api.github.com/users/%s/subscriptions", username);
         JSONObject mainJson = readJson(mainUrl);
 
@@ -27,9 +31,11 @@ public class UsersController {
                 .put("name", mainJson.get("name"))
                 .put("email", mainJson.get("email"))
                 .put("followers", mainJson.getInt("followers"))
-                .put("organizations", getOrganizations(username))
                 .put("own_repositories", mainJson.getInt("public_repos"))
-                .put("repositories_conitrubed_to", getArrayLength(reposContributedToUrl));
+                .put("repositories_conitrubed_to", getArrayLength(reposContributedToUrl))
+                .put("organizations", getOrganizations(username))
+                .put("total_stars", getTotalStars(ownReposUrl))
+                .put("languages_used", getLanguages(ownReposUrl));
         return result.toString(4);
     }
 
@@ -44,6 +50,35 @@ public class UsersController {
                     .put("avatar_url", organization.getString("avatar_url"))
                     .put("url", "https://github.com/" + organization.getString("login"));
             result.put(filteredOrg);
+        }
+        return result;
+    }
+
+    public int getTotalStars(String reposUrl) throws JSONException, IOException {
+        int result = 0;
+        for (JSONArray repoArray : getArrays(reposUrl)){
+            for (int i = 0; i < repoArray.length(); i++){
+                JSONObject repo = repoArray.getJSONObject(i);
+                result += repo.getInt("stargazers_count");
+            }
+        }
+        return result;
+    }
+
+    public JSONObject getLanguages(String reposUrl) throws IOException, JSONException {
+        Map<String, Integer> counter = new HashMap<>();
+        for (JSONArray repoArray : getArrays(reposUrl)){
+            for (int i = 0; i < repoArray.length(); i++){
+                JSONObject repo = repoArray.getJSONObject(i);
+                String key = repo.getString("language");
+                counter.put(key, counter.getOrDefault(key, 0) + 1);
+            }
+        }
+        JSONObject result = new JSONObject();
+        for (Map.Entry entry : counter.entrySet()) {
+            String key = (String) entry.getKey();
+            if (key.equals("null")) continue;
+            result.put(key, entry.getValue());
         }
         return result;
     }
