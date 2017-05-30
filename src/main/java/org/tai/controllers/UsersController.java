@@ -38,7 +38,7 @@ public class UsersController {
                 .put("own_repositories", mainJson.getInt("public_repos"))
                 .put("issues", getIssues(username))
                 .put("commits", commits)
-                .put("commits_per_day", getCommitsPerDay(commits, mainJson.getString("created_at")))
+                .put("commits_per_day", getCommitsPerDay(commits, getFirstCommitDate(username)))
                 .put("pull_requests", getPullRequests(username))
                 .put("repositories_conitrubed_to", getArrayLength(reposContributedToUrl))
                 .put("organizations", getOrganizations(username))
@@ -55,6 +55,16 @@ public class UsersController {
     private int getCommits(String username) throws IOException {
         String commitsUrl = String.format("https://api.github.com/search/commits?q=author:%s", username);
         return readJson(commitsUrl, "application/vnd.github.cloak-preview").getInt("total_count");
+    }
+
+    private String getFirstCommitDate(String username) throws IOException {
+        String firstCommitsUrl = String.format("https://api.github.com/search/commits?q=author:%s%%20sort:author-date-asc", username);
+        return readJson(firstCommitsUrl, "application/vnd.github.cloak-preview")
+                .getJSONArray("items")
+                .getJSONObject(0)
+                .getJSONObject("commit")
+                .getJSONObject("author")
+                .getString("date");
     }
 
     private double getCommitsPerDay(int commits, String githubDate){
@@ -97,12 +107,17 @@ public class UsersController {
         return result;
     }
 
-    private JSONObject getLanguages(String reposUrl) throws IOException, JSONException {
+    private JSONObject getLanguages(String reposUrl) throws IOException {
         Map<String, Integer> counter = new HashMap<>();
         for (JSONArray repoArray : getArrays(reposUrl)){
             for (int i = 0; i < repoArray.length(); i++){
                 JSONObject repo = repoArray.getJSONObject(i);
-                String key = repo.getString("language");
+                String key;
+                try {
+                     key = repo.getString("language");
+                } catch (JSONException e){
+                    key = "null";
+                }
                 counter.put(key, counter.getOrDefault(key, 0) + 1);
             }
         }
