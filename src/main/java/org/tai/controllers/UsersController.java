@@ -32,11 +32,23 @@ public class UsersController {
                 .put("email", mainJson.get("email"))
                 .put("followers", mainJson.getInt("followers"))
                 .put("own_repositories", mainJson.getInt("public_repos"))
+                .put("issues", getIssues(username))
+                .put("commits", getCommits(username))
                 .put("repositories_conitrubed_to", getArrayLength(reposContributedToUrl))
                 .put("organizations", getOrganizations(username))
                 .put("total_stars", getTotalStars(ownReposUrl))
-                .put("languages_used", getLanguages(ownReposUrl));
+                .put("repositories_written_in", getLanguages(ownReposUrl));
         return result.toString(4);
+    }
+
+    private int getIssues(String username) throws IOException {
+        String issuesUrl = String.format("https://api.github.com/search/issues?q=author:%s%%20is:issue", username);
+        return readJson(issuesUrl).getInt("total_count");
+    }
+
+    private int getCommits(String username) throws IOException {
+        String commitsUrl = String.format("https://api.github.com/search/commits?q=author:%s", username);
+        return readJson(commitsUrl, "application/vnd.github.cloak-preview").getInt("total_count");
     }
 
     private JSONArray getOrganizations(String user) throws IOException, JSONException {
@@ -54,7 +66,7 @@ public class UsersController {
         return result;
     }
 
-    public int getTotalStars(String reposUrl) throws JSONException, IOException {
+    private int getTotalStars(String reposUrl) throws JSONException, IOException {
         int result = 0;
         for (JSONArray repoArray : getArrays(reposUrl)){
             for (int i = 0; i < repoArray.length(); i++){
@@ -65,7 +77,7 @@ public class UsersController {
         return result;
     }
 
-    public JSONObject getLanguages(String reposUrl) throws IOException, JSONException {
+    private JSONObject getLanguages(String reposUrl) throws IOException, JSONException {
         Map<String, Integer> counter = new HashMap<>();
         for (JSONArray repoArray : getArrays(reposUrl)){
             for (int i = 0; i < repoArray.length(); i++){

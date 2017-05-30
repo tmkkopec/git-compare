@@ -5,11 +5,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 public class JSONReader {
 
+    public static JSONObject readJson(String url, String acceptHeader) throws IOException {
+        URL urlObj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
+        con.setRequestProperty("Accept", acceptHeader);
+        return new JSONObject(readInputStream(con.getInputStream()));
+    }
 
     public static JSONObject readJson(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
