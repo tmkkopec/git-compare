@@ -7,6 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +28,7 @@ public class UsersController {
         String reposContributedToUrl = String.format("https://api.github.com/users/%s/subscriptions", username);
         JSONObject mainJson = readJson(mainUrl);
 
+        int commits = getCommits(username);
         JSONObject result = new JSONObject();
         result.put("login", mainJson.getString("login"))
                 .put("avatar_url", mainJson.getString("avatar_url"))
@@ -33,7 +37,9 @@ public class UsersController {
                 .put("followers", mainJson.getInt("followers"))
                 .put("own_repositories", mainJson.getInt("public_repos"))
                 .put("issues", getIssues(username))
-                .put("commits", getCommits(username))
+                .put("commits", commits)
+                .put("commits_per_day", getCommitsPerDay(commits, mainJson.getString("created_at")))
+                .put("pull_requests", getPullRequests(username))
                 .put("repositories_conitrubed_to", getArrayLength(reposContributedToUrl))
                 .put("organizations", getOrganizations(username))
                 .put("total_stars", getTotalStars(ownReposUrl))
@@ -49,6 +55,20 @@ public class UsersController {
     private int getCommits(String username) throws IOException {
         String commitsUrl = String.format("https://api.github.com/search/commits?q=author:%s", username);
         return readJson(commitsUrl, "application/vnd.github.cloak-preview").getInt("total_count");
+    }
+
+    private double getCommitsPerDay(int commits, String githubDate){
+        String date = githubDate.substring(0, githubDate.indexOf("T"));
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        final LocalDate firstDate = LocalDate.parse(date, formatter);
+        final LocalDate secondDate = LocalDate.now();
+        final long days = ChronoUnit.DAYS.between(firstDate, secondDate);
+        return (double) commits / days;
+    }
+
+    private int getPullRequests(String username) throws IOException {
+        String issuesUrl = String.format("https://api.github.com/search/issues?q=author:%s%%20is:pr", username);
+        return readJson(issuesUrl).getInt("total_count");
     }
 
     private JSONArray getOrganizations(String user) throws IOException, JSONException {
