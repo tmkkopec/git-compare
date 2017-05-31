@@ -1,5 +1,6 @@
 package org.tai.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import java.io.IOException;
 @RestController
 public class OrganizationsController {
 
+    @Autowired
     private UsersService usersService;
 
     @RequestMapping(path = "/organizations/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

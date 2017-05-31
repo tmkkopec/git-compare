@@ -2,6 +2,7 @@ package org.tai.controllers;
 
 import javafx.util.Pair;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.tai.service.UsersService;
@@ -16,6 +17,7 @@ import static org.tai.jsonutils.JSONReader.readJson;
 @RestController
 public class UsersController {
 
+    @Autowired
     private UsersService usersService;
 
     @RequestMapping(path = "/users/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,7 +34,7 @@ public class UsersController {
         futures.add(completionService.submit(() -> new Pair<>("commits_per_day", usersService.getCommitsPerDay(username))));
         futures.add(completionService.submit(() -> new Pair<>("issues", usersService.getIssues(username))));
         futures.add(completionService.submit(() -> new Pair<>("pull_requests", usersService.getPullRequests(username))));
-        futures.add(completionService.submit(() -> new Pair<>("repositories_conitrubed_to", usersService.getRepositoriesContributedTo(username))));
+        futures.add(completionService.submit(() -> new Pair<>("repositories_contributed_to", usersService.getRepositoriesContributedTo(username))));
         futures.add(completionService.submit(() -> new Pair<>("organizations", usersService.getOrganizations(username))));
         futures.add(completionService.submit(() -> new Pair<>("total_stars", usersService.getTotalStars(username))));
         futures.add(completionService.submit(() -> new Pair<>("repositories_written_in", usersService.getLanguages(username))));

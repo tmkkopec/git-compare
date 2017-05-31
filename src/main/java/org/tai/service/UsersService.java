@@ -3,6 +3,7 @@ package org.tai.service;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import static org.tai.jsonutils.JSONCalc.getArrays;
 import static org.tai.jsonutils.JSONReader.readJson;
 import static org.tai.jsonutils.JSONReader.readJsonArray;
 
+@Service
 public class UsersService {
 
     private JSONObject readUsersJSON(String username) throws IOException {
@@ -66,7 +68,7 @@ public class UsersService {
         return readJson(commitsUrl, "application/vnd.github.cloak-preview").getInt("total_count");
     }
 
-    public String getFirstCommitDate(String username) throws IOException {
+    private String getFirstCommitDate(String username) throws IOException {
         String firstCommitsUrl = String.format("https://api.github.com/search/commits?q=author:%s%%20sort:author-date-asc", username);
         return readJson(firstCommitsUrl, "application/vnd.github.cloak-preview")
                 .getJSONArray("items")
