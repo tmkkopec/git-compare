@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.tai.jsonutils.JSONCalc.getArrayLength;
@@ -29,6 +30,7 @@ public class UsersController {
         JSONObject mainJson = readJson(mainUrl);
 
         int commits = getCommits(username);
+        List<JSONArray> repoArrays = getArrays(ownReposUrl);
         JSONObject result = new JSONObject();
         result.put("login", mainJson.getString("login"))
                 .put("avatar_url", mainJson.getString("avatar_url"))
@@ -42,8 +44,8 @@ public class UsersController {
                 .put("pull_requests", getPullRequests(username))
                 .put("repositories_conitrubed_to", getArrayLength(reposContributedToUrl))
                 .put("organizations", getOrganizations(username))
-                .put("total_stars", getTotalStars(ownReposUrl))
-                .put("repositories_written_in", getLanguages(ownReposUrl));
+                .put("total_stars", getTotalStars(repoArrays))
+                .put("repositories_written_in", getLanguages(repoArrays));
         return result.toString(4);
     }
 
@@ -96,9 +98,9 @@ public class UsersController {
         return result;
     }
 
-    private int getTotalStars(String reposUrl) throws JSONException, IOException {
+    private int getTotalStars(List<JSONArray> repoArrays) throws JSONException, IOException {
         int result = 0;
-        for (JSONArray repoArray : getArrays(reposUrl)){
+        for (JSONArray repoArray : repoArrays){
             for (int i = 0; i < repoArray.length(); i++){
                 JSONObject repo = repoArray.getJSONObject(i);
                 result += repo.getInt("stargazers_count");
@@ -107,9 +109,9 @@ public class UsersController {
         return result;
     }
 
-    private JSONObject getLanguages(String reposUrl) throws IOException {
+    private JSONObject getLanguages(List<JSONArray> repoArrays) throws IOException {
         Map<String, Integer> counter = new HashMap<>();
-        for (JSONArray repoArray : getArrays(reposUrl)){
+        for (JSONArray repoArray : repoArrays){
             for (int i = 0; i < repoArray.length(); i++){
                 JSONObject repo = repoArray.getJSONObject(i);
                 String key;
