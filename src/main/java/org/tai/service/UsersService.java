@@ -9,10 +9,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.tai.jsonutils.JSONCalc.getArrayLength;
+import static org.tai.jsonutils.JSONCalc.getArrays;
 import static org.tai.jsonutils.JSONReader.readJson;
 import static org.tai.jsonutils.JSONReader.readJsonArray;
 
@@ -76,7 +76,9 @@ public class UsersService {
                 .getString("date");
     }
 
-    public double getCommitsPerDay(int commits, String githubDate){
+    public double getCommitsPerDay(String username) throws IOException {
+        int commits = getCommits(username);
+        String githubDate = getFirstCommitDate(username);
         String date = githubDate.substring(0, githubDate.indexOf("T"));
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         final LocalDate firstDate = LocalDate.parse(date, formatter);
@@ -90,8 +92,8 @@ public class UsersService {
         return readJson(issuesUrl).getInt("total_count");
     }
 
-    public JSONArray getOrganizations(String user) throws IOException, JSONException {
-        String organizationsUrl = String.format("https://api.github.com/users/%s/orgs?per_page=100", user);
+    public JSONArray getOrganizations(String username) throws IOException, JSONException {
+        String organizationsUrl = String.format("https://api.github.com/users/%s/orgs?per_page=100", username);
         JSONArray orgsArray = readJsonArray(organizationsUrl);
         JSONArray result = new JSONArray();
         for (int i = 0; i < orgsArray.length(); i++){
@@ -105,9 +107,10 @@ public class UsersService {
         return result;
     }
 
-    public int getTotalStars(List<JSONArray> repoArrays) throws JSONException, IOException {
+    public int getTotalStars(String username) throws JSONException, IOException {
+        String ownReposUrl = String.format("https://api.github.com/users/%s/repos?per_page=100", username);
         int result = 0;
-        for (JSONArray repoArray : repoArrays){
+        for (JSONArray repoArray : getArrays(ownReposUrl)){
             for (int i = 0; i < repoArray.length(); i++){
                 JSONObject repo = repoArray.getJSONObject(i);
                 result += repo.getInt("stargazers_count");
@@ -116,9 +119,10 @@ public class UsersService {
         return result;
     }
 
-    public JSONObject getLanguages(List<JSONArray> repoArrays) throws IOException {
+    public JSONObject getLanguages(String username) throws IOException {
+        String ownReposUrl = String.format("https://api.github.com/users/%s/repos?per_page=100", username);
         Map<String, Integer> counter = new HashMap<>();
-        for (JSONArray repoArray : repoArrays){
+        for (JSONArray repoArray : getArrays(ownReposUrl)){
             for (int i = 0; i < repoArray.length(); i++){
                 JSONObject repo = repoArray.getJSONObject(i);
                 String key;

@@ -8,8 +8,6 @@ import org.tai.service.UsersService;
 
 import java.io.IOException;
 
-import static org.tai.jsonutils.JSONCalc.getArrays;
-
 @RestController
 public class TotalStarsController {
 
@@ -17,7 +15,6 @@ public class TotalStarsController {
 
     @RequestMapping(path = "/total_stars/{username}", method = RequestMethod.GET)
     public int getTotalStars(@PathVariable String username) throws IOException {
-        String ownReposUrl = String.format("https://api.github.com/users/%s/repos?per_page=100", username);
-        return usersService.getTotalStars(getArrays(ownReposUrl));
+        return usersService.getTotalStars(username);
     }
 }

@@ -9,8 +9,6 @@ import org.tai.service.UsersService;
 
 import java.io.IOException;
 
-import static org.tai.jsonutils.JSONCalc.getArrays;
-
 @RestController
 public class RepoLanguagesController {
 
@@ -18,7 +16,6 @@ public class RepoLanguagesController {
 
     @RequestMapping(path = "/repositories_written_in/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getRepoLanguages(@PathVariable String username) throws IOException {
-        String ownReposUrl = String.format("https://api.github.com/users/%s/repos?per_page=100", username);
-        return usersService.getLanguages(getArrays(ownReposUrl)).toString(4);
+        return usersService.getLanguages(username).toString(4);
     }
 }

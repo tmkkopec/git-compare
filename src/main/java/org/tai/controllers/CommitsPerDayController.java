@@ -15,6 +15,6 @@ public class CommitsPerDayController {
 
     @RequestMapping(path = "/commits_per_day/{username}", method = RequestMethod.GET)
     public double getCommitsPerDay(@PathVariable String username) throws IOException {
-        return usersService.getCommitsPerDay(usersService.getCommits(username), usersService.getFirstCommitDate(username));
+        return usersService.getCommitsPerDay(username);
     }
 }
