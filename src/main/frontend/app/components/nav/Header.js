@@ -1,10 +1,15 @@
 'use strict';
 
 import React from "react";
+import PropTypes from "prop-types";
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    shouldComponentUpdate() {
+        return false;
     }
 
     render() {
@@ -26,5 +31,10 @@ class Header extends React.Component {
         )
     }
 }
+
+Header.propTypes = {
+    username: PropTypes.string.isRequired,
+    onLogout: PropTypes.func.isRequired
+};
 
 export default Header;

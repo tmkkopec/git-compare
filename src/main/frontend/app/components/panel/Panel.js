@@ -5,18 +5,32 @@ const uniqueId = require('lodash/uniqueId');
 
 class PanelRow extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.parseValue = this.parseValue.bind(this);
+    }
+
+    parseValue(val) {
+        if (val instanceof Array)
+            return val.length > 0 ? val.join(', ') : 'No info available';
+        else if (val instanceof Object) {
+            let renderValue = '';
+            Object.keys(val).forEach((key) => {
+                renderValue += key + ': ' + JSON.stringify(val[key], 4) + '\n';
+            });
+            return renderValue;
+        }
+        else
+            return val !== null ? String(val) : 'No info available';
     }
 
     render() {
-        let val = this.props.propertyValue;
         return (
             <tr>
                 <td className="mdl-data-table__cell--non-numeric">
                     <p className="mdl-typography--body-2">{this.props.propertyName}</p>
                 </td>
                 <td>
-                    <p>{val !== null ? String(val) : 'No info available'}</p>
+                    <p>{this.parseValue(this.props.propertyValue)}</p>
                 </td>
             </tr>
         )
@@ -53,13 +67,17 @@ class Panel extends React.Component {
                         <img className="material-icons" src={userData.avatar_url}/>
                     </td>
                 </tr>
-                {this.props.properties.map((element) => {
-                    return (
-                        <PanelRow propertyName={element.value}
-                                  propertyValue={userData[element.key]}
-                                  key={uniqueId()}/>
-                    )
-                })}
+                {this.props.properties
+                    .filter((element) => {
+                        return element.isShown
+                    })
+                    .map((element) => {
+                        return (
+                            <PanelRow propertyName={element.name}
+                                      propertyValue={userData[element.key]}
+                                      key={uniqueId()}/>
+                        )
+                    })}
                 </tbody>
             </table>
         )

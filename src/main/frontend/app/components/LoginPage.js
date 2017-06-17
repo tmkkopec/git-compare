@@ -1,8 +1,8 @@
 'use strict';
 
 const React = require('react');
-const MdlGrid = require('./MdlGrid');
-const MdlCell = require('./MdlCell');
+const MdlGrid = require('./util/MdlGrid');
+const MdlCell = require('./util/MdlCell');
 
 class Title extends React.Component {
     constructor(props) {

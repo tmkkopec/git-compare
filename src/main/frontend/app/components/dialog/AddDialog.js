@@ -1,6 +1,7 @@
 'use strict';
 
 import React from "react";
+import PropTypes from "prop-types";
 import Modal from "boron/FadeModal";
 import $ from "jquery";
 import DynamicList from "./DynamicList";
@@ -133,5 +134,10 @@ class AddDialog extends React.Component {
         )
     }
 }
+
+AddDialog.propTypes = {
+    token: PropTypes.string.isRequired,
+    addPanel: PropTypes.func.isRequired
+};
 
 export default AddDialog;

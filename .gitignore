@@ -25,3 +25,4 @@ nbdist/
 .nb-gradle/
 
 src/main/frontend/node_modules
+src/main/resources/static/bower_components

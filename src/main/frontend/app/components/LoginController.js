@@ -63,13 +63,17 @@ class LoginController extends React.Component {
     }
 
     render() {
-        if (this.state.authenticated)
+        if (this.state.authenticated) {
+            document.querySelector('title').innerHTML = 'Git Compare - Home page';
             return <HomePage
                 user={{name: this.state.username}}
                 onLogout={this.handleLogout}
                 token={this.state.token}/>;
-        else
+        }
+        else {
+            document.querySelector('title').innerHTML = 'Git Compare - Login';
             return <LoginPage/>;
+        }
     }
 }
 
