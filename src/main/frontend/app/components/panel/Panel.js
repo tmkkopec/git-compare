@@ -11,7 +11,9 @@ class PanelRow extends React.Component {
 
     parseValue(val) {
         if (val instanceof Array)
-            return val.length > 0 ? val.join(', ') : 'No info available';
+            return val.length > 0 ?
+                val.map((element) => element.name).join(', ') :
+                'No info available';
         else if (val instanceof Object) {
             let renderValue = '';
             Object.keys(val).forEach((key) => {

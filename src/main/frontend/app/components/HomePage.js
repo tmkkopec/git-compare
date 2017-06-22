@@ -55,10 +55,6 @@ class HomePage extends React.Component {
                 })
             }
         });
-        self.setState({
-            error: false,
-            users: self.state.users.concat([data])
-        });
     }
 
     changeProperty(name, isShown) {
