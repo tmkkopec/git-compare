@@ -33,13 +33,18 @@ public class UsersController {
         List<Future<Pair<String, Object>>> futures = new LinkedList<>();
         futures.add(completionService.submit(() -> new Pair<>("main_json", readJson(mainUrl))));
         futures.add(completionService.submit(() -> new Pair<>("commits", usersService.getCommits(username))));
-        futures.add(completionService.submit(() -> new Pair<>("commits_per_day", usersService.getCommitsPerDay(username))));
+        futures.add(completionService.submit(() -> new Pair<>("commits_per_day",
+                usersService.getCommitsPerDay(username))));
         futures.add(completionService.submit(() -> new Pair<>("issues", usersService.getIssues(username))));
-        futures.add(completionService.submit(() -> new Pair<>("pull_requests", usersService.getPullRequests(username))));
-        futures.add(completionService.submit(() -> new Pair<>("repositories_contributed_to", usersService.getRepositoriesContributedTo(username))));
-        futures.add(completionService.submit(() -> new Pair<>("organizations", usersService.getOrganizations(username))));
+        futures.add(completionService.submit(() -> new Pair<>("pull_requests",
+                usersService.getPullRequests(username))));
+        futures.add(completionService.submit(() -> new Pair<>("repositories_contributed_to",
+                usersService.getRepositoriesContributedTo(username))));
+        futures.add(completionService.submit(() -> new Pair<>("organizations",
+                usersService.getOrganizations(username))));
         futures.add(completionService.submit(() -> new Pair<>("total_stars", usersService.getTotalStars(username))));
-        futures.add(completionService.submit(() -> new Pair<>("repositories_written_in", usersService.getLanguages(username))));
+        futures.add(completionService.submit(() -> new Pair<>("repositories_written_in",
+                usersService.getLanguages(username))));
 
         for (int i = 0; i < futures.size(); i++) {
             Pair<String, Object> futureResult = completionService.take().get();
