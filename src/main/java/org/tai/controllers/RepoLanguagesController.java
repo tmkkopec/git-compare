@@ -10,12 +10,21 @@ import org.tai.service.UsersService;
 
 import java.io.IOException;
 
+/**
+ * REST controller class for retrieving JSON object containing languages and number of repositories written in given language
+ */
 @RestController
 public class RepoLanguagesController {
 
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Method that handles GET requests for /repositories_written_in/{username} endpoint
+     * @param username - username of GitHub user
+     * @return String representation of JSON object containing languages and number of repositories written in given language
+     * @throws IOException
+     */
     @RequestMapping(path = "/repositories_written_in/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getRepoLanguages(@PathVariable String username) throws IOException {
         return usersService.getLanguages(username).toString(4);

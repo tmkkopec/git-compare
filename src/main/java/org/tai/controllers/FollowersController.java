@@ -9,12 +9,22 @@ import org.tai.service.UsersService;
 
 import java.io.IOException;
 
+
+/**
+ * REST controller class for retrieving number of followers
+ */
 @RestController
 public class FollowersController {
 
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Method that handles GET methods for /followers/{username} endpoint
+     * @param username - username of GitHub user
+     * @return number of user's followers
+     * @throws IOException
+     */
     @RequestMapping(path = "/followers/{username}", method = RequestMethod.GET)
     public int getFollowers(@PathVariable String username) throws IOException {
         return usersService.getFollowers(username);

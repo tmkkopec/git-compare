@@ -9,12 +9,21 @@ import org.tai.service.UsersService;
 
 import java.io.IOException;
 
+/**
+ * REST controller class for retrieving number of repositories contribued to by user
+ */
 @RestController
 public class ReposContributedToController {
 
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Method that handles GET requests for /repositories_contributed_to/{username} endpoint
+     * @param username - username of GitHub user
+     * @return number of repositories contributed to by user
+     * @throws IOException
+     */
     @RequestMapping(path = "/repositories_contributed_to/{username}", method = RequestMethod.GET)
     public int getReposContributedTo(@PathVariable String username) throws IOException {
         return usersService.getRepositoriesContributedTo(username);

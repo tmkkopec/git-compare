@@ -16,12 +16,22 @@ import java.util.concurrent.*;
 
 import static org.tai.jsonutils.JSONReader.readJson;
 
+/**
+ * REST controller class for whole user info
+ */
 @RestController
 public class UsersController {
 
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Method that handles GET requests for /users/{username} endpoint
+     * @param username - username of GitHub user
+     * @return String representation of JSON object containing whole user's info
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
     @RequestMapping(path = "/users/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getUserInfo(@PathVariable String username) throws InterruptedException, ExecutionException {
 

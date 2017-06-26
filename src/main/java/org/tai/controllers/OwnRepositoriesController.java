@@ -9,12 +9,21 @@ import org.tai.service.UsersService;
 
 import java.io.IOException;
 
+/**
+ * REST controller class for retrieving number of repositories created by user
+ */
 @RestController
 public class OwnRepositoriesController {
 
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Method that handles GET requests for /own_repositories/{username} endpoint
+     * @param username - username of GitHub user
+     * @return number of repositories created by user
+     * @throws IOException
+     */
     @RequestMapping(path = "/own_repositories/{username}", method = RequestMethod.GET)
     public int getOwnRepositories(@PathVariable String username) throws IOException {
         return usersService.getOwnRepositories(username);

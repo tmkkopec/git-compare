@@ -9,12 +9,21 @@ import org.tai.service.UsersService;
 
 import java.io.IOException;
 
+/**
+ * REST controller class for retrieving number of commits created by user
+ */
 @RestController
 public class CommitsController {
 
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Method that handles GET requests for /commits/{username} endpoint
+     * @param username - username of GitHub user
+     * @return number of commits created by user
+     * @throws IOException
+     */
     @RequestMapping(path = "/commits/{username}", method = RequestMethod.GET)
     public int getCommits(@PathVariable String username) throws IOException {
         return usersService.getCommits(username);

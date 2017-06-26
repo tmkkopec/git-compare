@@ -9,12 +9,21 @@ import org.tai.service.UsersService;
 
 import java.io.IOException;
 
+/**
+ * REST controller class for retrieving user's avatar url
+ */
 @RestController
 public class AvatarUrlsController {
 
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Method that handles GET requests for /avatar_urls/{username} endpoint
+     * @param username - username of GitHub user
+     * @return url pointing to user's avatar image
+     * @throws IOException
+     */
     @RequestMapping(path = "/avatar_urls/{username}", method = RequestMethod.GET)
     public String getAvatarURL(@PathVariable String username) throws IOException {
         return usersService.getAvatarUrl(username);
