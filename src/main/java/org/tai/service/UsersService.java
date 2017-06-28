@@ -140,7 +140,7 @@ public class UsersService {
     public double getCommitsPerDay(String username) throws IOException {
         int commits = getCommits(username);
         String githubDate = getFirstCommitDate(username);
-        String date = githubDate.substring(0, githubDate.indexOf("T"));
+        String date = githubDate.substring(0, githubDate.indexOf('T'));
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         final LocalDate firstDate = LocalDate.parse(date, formatter);
         final LocalDate secondDate = LocalDate.now();
@@ -221,7 +221,8 @@ public class UsersService {
         JSONObject result = new JSONObject();
         for (Map.Entry entry : counter.entrySet()) {
             String key = (String) entry.getKey();
-            if (key.equals("null")) continue;
+            if ("null".equals(key))
+                continue;
             result.put(key, entry.getValue());
         }
         return result;

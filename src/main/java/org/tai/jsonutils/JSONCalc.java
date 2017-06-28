@@ -51,7 +51,7 @@ public class JSONCalc {
         String[] links = linkHeader.split(", ");
         for (String link : links){
             String[] splitLink = link.split("; ");
-            if (splitLink[1].equals("rel=\"last\"")){
+            if ("rel=\"last\"".equals(splitLink[1])){
                 return parseUrl(splitLink[0]);
             }
         }
@@ -95,9 +95,11 @@ public class JSONCalc {
             String linkHeader = connection.getHeaderField("Link");
             InputStream is = urlObj.openStream();
             result.add(readJsonArray(is));
-            if (linkHeader == null) break;
+            if (linkHeader == null)
+                break;
             Map<String, String> linksMap = getLinkMap(linkHeader);
-            if (!linksMap.containsKey("next")) break;
+            if (!linksMap.containsKey("next"))
+                break;
             url = linksMap.get("next");
         }
         return result;
