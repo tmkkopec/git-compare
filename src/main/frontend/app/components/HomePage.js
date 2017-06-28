@@ -7,6 +7,7 @@ import Drawer from "./nav/Drawer";
 import AddDialog from "./dialog/AddDialog";
 import PanelController from "./panel/PanelController";
 import Property from "./util/Property";
+import $ from 'jquery';
 const uniqueId = require('lodash/uniqueId');
 
 const properties = [
@@ -40,49 +41,22 @@ class HomePage extends React.Component {
     }
 
     addPanel(username) {
-        // const url = "http://localhost:8080/users/" + username;
+        const url = "http://localhost:8080/users/" + username;
         const self = this;
-        // $.ajax({
-        //     url: url,
-        //     success: function (data) {
-        //         self.setState({
-        //             error: false,
-        //             users: self.state.users.concat([data])
-        //         });
-        //     },
-        //     error: function (jqXHR, textStatus, errorThrown) {
-        //         self.setState({
-        //             error: errorThrown
-        //         })
-        //     }
-        // });
-        const data = {
-            "repositories_contributed_to": 39,
-            "own_repositories": 9,
-            "created_at": "2011-05-18T14:51:21Z",
-            "login": "odersky",
-            "issues": 91,
-            "commits_per_day": 6.8844537815126055,
-            "pull_requests": 711,
-            "followers": 1520,
-            "total_stars": 125,
-            "avatar_url": "https://avatars1.githubusercontent.com/u/795990?v=3",
-            "repositories_written_in": {
-                "CSS": 2,
-                "Scala": 6,
-                "JavaScript": 1
+        $.ajax({
+            url: url,
+            success: function (data) {
+                data._id = uniqueId();
+                self.setState({
+                    error: false,
+                    users: self.state.users.concat([data])
+                });
             },
-            "html_url": "https://github.com/odersky",
-            "name": null,
-            "organizations": [],
-            "commits": 36047,
-            "location": null,
-            "email": null
-        };
-        data._id = uniqueId();
-        self.setState({
-            error: false,
-            users: self.state.users.concat([data])
+            error: function (jqXHR, textStatus, errorThrown) {
+                self.setState({
+                    error: errorThrown
+                })
+            }
         });
     }
 
