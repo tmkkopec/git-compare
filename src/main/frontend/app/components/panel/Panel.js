@@ -66,7 +66,11 @@ class Panel extends React.Component {
                         </a>
                     </td>
                     <td className="mdl-data-table__cell--non-numeric">
-                        <img className="material-icons" src={userData.avatar_url}/>
+                        <img src={userData.avatar_url}/>
+                        <button id="closeButton"
+                                onClick={() => this.props.handleClosePanel(userData._id)}>
+                            <i className="material-icons">close</i>
+                        </button>
                     </td>
                 </tr>
                 {this.props.properties

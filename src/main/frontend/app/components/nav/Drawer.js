@@ -19,8 +19,8 @@ class Checkbox extends React.Component {
                     <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect"
                            htmlFor={"list-switch-" + id}>
                     <input type="checkbox" id={"list-switch-" + id} className="mdl-switch__input"
-                            onChange={(event) =>
-                                this.props.changeProperty(this.props.attributeName, event.target.checked)}
+                           onChange={(event) =>
+                               this.props.changeProperty(this.props.attributeName, event.target.checked)}
                            defaultChecked={this.props.defaultChecked}/>
                     </label>
                 </span>

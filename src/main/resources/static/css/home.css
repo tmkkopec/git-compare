@@ -79,3 +79,18 @@ td img {
 table a {
     color: rgb(85, 26, 139)
 }
+
+#closeButton {
+    background: Transparent no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    padding: 0;
+    float: right;
+    transition-duration: 0.4s;
+}
+
+#closeButton:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+}

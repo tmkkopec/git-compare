@@ -11,9 +11,13 @@ class Input extends React.Component {
         super(props);
     }
 
+    componentDidMount() {
+        this.props.inputMounted();
+    }
+
     render() {
         return (
-            <input className="mdl-textfield__input" type="text"
+            <input id="textInput" className="mdl-textfield__input" type="text"
                    onChange={this.props.handleChange}
                    value={this.props.value}
             />
@@ -29,12 +33,16 @@ class AddDialog extends React.Component {
             isVisible: false,
             users: []
         };
+        this.typingTimer = 0;
+        this.doneTypingInterval = 2000;
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleHide = this.handleHide.bind(this);
         this.handleUserSelect = this.handleUserSelect.bind(this);
         this.addUser = this.addUser.bind(this);
+        this.doneTyping = this.doneTyping.bind(this);
+        this.inputMounted = this.inputMounted.bind(this);
     }
 
     showModal() {
@@ -54,13 +62,29 @@ class AddDialog extends React.Component {
     }
 
     handleChange(event) {
-        const self = this;
         const value = event.target.value;
 
         this.setState({
             inputValue: value
         });
+    }
 
+    handleUserSelect(text) {
+        this.setState({
+            isListVisible: false,
+            inputValue: text,
+            users: []
+        });
+    }
+
+    addUser(username) {
+        this.hideModal();
+        this.props.addPanel(username);
+    }
+
+    doneTyping() {
+        const self = this;
+        const value = this.state.inputValue;
         if (value !== '') {
             const url = 'https://api.github.com/search/users?q=' + value + 'in:login&' +
                 'access_token=' + this.props.token;
@@ -85,24 +109,21 @@ class AddDialog extends React.Component {
         }
     }
 
-    handleUserSelect(text) {
-        this.setState({
-            isListVisible: false,
-            inputValue: text,
-            users: []
+    inputMounted() {
+        const self = this;
+        $('#textInput').keyup(function () {
+            clearTimeout(self.typingTimer);
+            if ($('#textInput').val()) {
+                self.typingTimer = setTimeout(self.doneTyping, self.doneTypingInterval);
+            }
         });
-    }
-
-    addUser(username) {
-        this.hideModal();
-        this.props.addPanel(username);
     }
 
     render() {
         return (
             <div className="addDialog">
                 <button
-                    className="addButton mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
+                    className="addButton mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-color--grey-400"
                     onClick={this.showModal}>
                     <i className="material-icons">add</i>
                 </button>
@@ -116,7 +137,8 @@ class AddDialog extends React.Component {
                         <div id="dynamicInput" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <Input
                                 value={this.state.inputValue}
-                                handleChange={this.handleChange}/>
+                                handleChange={this.handleChange}
+                                inputMounted={this.inputMounted}/>
                             <DynamicList
                                 list={this.state.users}
                                 isVisible={this.state.isListVisible}
@@ -124,8 +146,11 @@ class AddDialog extends React.Component {
                         </div>
                     </div>
                     <div className="mdl-dialog__actions">
-                        <button className="mdl-button" onClick={() => this.addUser(this.state.inputValue)}>Add</button>
-                        <button className="mdl-button mdl-js-button mdl-button--raised" onClick={this.hideModal}>
+                        <button className="mdl-button mdl-js-button mdl-button--raised"
+                                onClick={() => this.addUser(this.state.inputValue)}>Add
+                        </button>
+                        <button className="mdl-button mdl-js-button mdl-button--raised"
+                                onClick={this.hideModal}>
                             Close
                         </button>
                     </div>
